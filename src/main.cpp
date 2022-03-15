@@ -1,52 +1,44 @@
-#include <iostream>
-#include "SDL_utils.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "Wall.h"
+#include "Component.h"
+#include "Snake.h"
+#include "apple.h"
 
-using namespace std;
-
-//**************************************************************
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-const char WINDOW_TITLE[11] = "Games v1.0";
-
-enum KeyPressSurfaces
+int main(int argc, char* argv[])
 {
-    KEY_PRESS_SURFACE_DEFAULT,
-    KEY_PRESS_SURFACE_UP,
-    KEY_PRESS_SURFACE_DOWN,
-    KEY_PRESS_SURFACE_LEFT,
-    KEY_PRESS_SURFACE_RIGHT,
-    KEY_PRESS_SURFACE_TOTAL
-};
-//**************************************************************
-
-int main(int argc, char *argv[])
-{
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    SDL_Surface *windowSurface;
-    SDL_Surface *imageSurface;
-    initSDL(window, renderer, WINDOW_TITLE);
-    bool gameRunning = true;
-    SDL_Event e;
-    while(gameRunning){
-        while(SDL_PollEvent(&e)){
-            if(e.type = SDL_QUIT){
-                gameRunning = false;
-            }
+    Apple apple;
+    Snake snake;
+    initSDL("Game v0.1");
+    bool isRunning = true;
+    int event = -3, newEvent;
+    while(isRunning)
+    {
+        while(SDL_PollEvent(&g_event))
+        {
+            if(g_event.type == SDL_QUIT) isRunning = false;
+            newEvent = snake.handleEvent();
         }
+        if(newEvent != -3 && newEvent != event && abs(newEvent - event) != 2) 
+        {
+            event = newEvent;
+            snake.move(event);
+        }
+        else snake.move(event);
+        if(snake.checkCollision() == true && snake.getLength() > 2)
+        {
+            isRunning = false;
+        }
+        if(apple.checkEaten(snake.returnBody(), snake.getLength() - 1))
+        {
+            snake.grow();
+        }
+        SDL_SetRenderDrawColor(g_renderer, 0 , 0 , 0, 255);
+        SDL_RenderClear(g_renderer);
+        apple.showApple(snake.getLength() - 1) ;
+        snake.drawBody();
+        SDL_RenderPresent(g_renderer);
+        SDL_Delay(50);
     }
-
-    // windowSurface = SDL_GetWindowSurface(window);
-    // imageSurface = SDL_LoadBMP("res/VSCode.bmp");
-    // if(imageSurface == NULL){
-    //     logSDLError(std::cout, "imageSurface", true);
-    // }
-    // SDL_BlitSurface(imageSurface, NULL, windowSurface, NULL);
-    // SDL_UpdateWindowSurface(window);
-    
-    // waitUntilKeyPressed();
-    quitSDL(window, renderer);
+    quitSDL();
     return 0;
 }
+

@@ -1,16 +1,41 @@
+#pragma once
 #include <iostream>
-#include <SDL2/SDL.h>
 #include <string>
+#include <vector>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
-void logSDLError(std::ostream& os,
-                 const std::string &msg, bool fatal = false);
+enum DIRECTION
+{
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN,
+    TOTAL
+};
 
-void initSDL(SDL_Window* &window, SDL_Renderer* &renderer, const char* WINDOW_TILTE) ;
+extern SDL_Window* g_window ;
+extern SDL_Renderer* g_renderer ;
+extern SDL_Event g_event ;
 
-void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
+const int START_X = 200;
+const int START_Y = 200;
+const int WALL_WIDTH = 20;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 640;
+const int SCREEN_BPP = 322;
+
+void logSDLError(std::ostream& os, const std::string &msg, bool fatal = false);
+
+void initSDL(std::string WINDOW_TILTE);
+
+void quitSDL();
 
 void waitUntilKeyPressed();
 
-void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, const SDL_Rect& filled_rect);
 
-SDL_Texture* loadTexture(const char* filePath, SDL_Renderer* &renderer);
+
