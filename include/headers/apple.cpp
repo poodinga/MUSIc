@@ -9,7 +9,7 @@ Apple::Apple()
 void Apple::spawnApples()
 {
     srand(time(0));
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 1000; i++)
     {
         SDL_Rect apple = {rand()%64*20, rand()%32*20, 20, 20};
         apples.push_back(apple);

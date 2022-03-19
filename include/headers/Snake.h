@@ -19,7 +19,7 @@ public:
     void drawHead();
     void spawnSnake();
     void drawBody();
-    void grow();
+    void grow(int direction_);
     int getLength();
     void move(int direction_);
     int handleEvent();

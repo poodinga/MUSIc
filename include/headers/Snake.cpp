@@ -40,10 +40,22 @@ snakeBody  Snake::returnBody()
     return body;
 }
 
-void Snake::grow()
+void Snake::grow(int direction_)
 {
     SDL_Rect newPart ;
-    newPart = {START_X -20, START_Y, WALL_WIDTH, WALL_WIDTH};
+    int x = 0, y = 0;
+    switch (direction_)
+    {
+        case UP:
+            y -= 20; break;
+        case DOWN:
+            y += 20; break;
+        case LEFT:
+            x -= 20; break;
+        case RIGHT:
+            x += 20; break;
+    }
+    newPart = {body.body_[getLength()-1].x + x, body.body_[getLength()-1].y + y, WALL_WIDTH, WALL_WIDTH};
     SDL_Rect& temp = newPart;
     body.body_.push_back(temp);
     body.length ++;

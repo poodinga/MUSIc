@@ -5,9 +5,11 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <stdint.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
 
 enum DIRECTION
 {
@@ -18,9 +20,9 @@ enum DIRECTION
     TOTAL
 };
 
-extern SDL_Window* g_window ;
-extern SDL_Renderer* g_renderer ;
-extern SDL_Event g_event ;
+extern SDL_Window *g_window;
+extern SDL_Renderer *g_renderer;
+extern SDL_Event g_event;
 
 const int START_X = 200;
 const int START_Y = 200;
@@ -29,7 +31,7 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 322;
 
-void logSDLError(std::ostream& os, const std::string &msg, bool fatal = false);
+void logSDLError(std::ostream &os, const std::string &msg, bool fatal = false);
 
 void initSDL(std::string WINDOW_TILTE);
 
@@ -37,5 +39,10 @@ void quitSDL();
 
 void waitUntilKeyPressed();
 
+void displayText(int score);
 
+void playMusic();
 
+void playSound();
+
+void askPlayAgain();
